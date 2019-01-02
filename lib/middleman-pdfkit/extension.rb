@@ -4,6 +4,8 @@ module Middleman
       option :filenames, [], 'array of html files without .ext or leave it empty for all html files in build directory'
 
       # https://github.com/pdfkit/pdfkit/blob/v0.6.2/lib/pdfkit/configuration.rb#L10-L17
+      option :root_url,                 nil,      'Root URL for asset resolution'
+      option :protocol,                 nil,      'Protocol for asset resolution'
       option :disable_smart_shrinking,  false,    'Disable smart shrinking'
       option :quiet,                    true,     'Be quiet'
       option :page_size,                'A4',     'Page size: A4'
@@ -98,6 +100,8 @@ module Middleman
 
       def generate_pdf(html_filename, pdf_filename)
         kit = ::PDFKit.new(File.new(html_filename),
+          root_url:                 options.root_url,
+          protocol:                 options.protocol,
           disable_smart_shrinking:  options.disable_smart_shrinking,
           quiet:                    options.quiet,
           page_size:                options.page_size,
